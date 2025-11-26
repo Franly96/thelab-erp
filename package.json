@@ -11,13 +11,15 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
+    "@tanstack/react-query": "^5.90.11",
     "axios": "^1.13.2",
     "eslint-plugin-react-dom": "^2.3.7",
     "eslint-plugin-react-x": "^2.3.7",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.6",
-    "vite-plugin-pages": "^0.33.1"
+    "vite-plugin-pages": "^0.33.1",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

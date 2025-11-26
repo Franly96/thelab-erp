@@ -1,26 +1,35 @@
-import { useEffect, useState } from 'react';
-import client from './api/client';
-import './App.css'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import AuthLayout from './layouts/AuthLayout';
+import MainLayout from './layouts/MainLayout';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import Users from './pages/Users';
+import RequireSysadmin from './routes/RequireSysadmin';
+import { useUserStore } from './store/useUserStore';
 
 function App() {
-  const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    client.get('/')
-      .then(response => setMessage(response.data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
+  const user = useUserStore((state) => state.user);
+  const login = useUserStore((state) => state.login);
+  const logout = useUserStore((state) => state.logout);
 
   return (
-    <>
-      <div style={{ textAlign: 'center', marginTop: '50px' }}>
-        <h1>Página en Desarrollo</h1>
-        <p>¡Disculpa las molestias! Estamos trabajando para mejorar tu experiencia.</p>
-        <p>Vuelve pronto.</p>
-        {message && <p>Backend says: {message}</p>}
-      </div>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route element={<MainLayout user={user} onLogout={logout} />}>
+          <Route index element={<Dashboard />} />
+          <Route element={<RequireSysadmin user={user} />}>
+            <Route path="/users" element={<Users />} />
+          </Route>
+        </Route>
+
+        <Route element={<AuthLayout isAuthenticated={Boolean(user)} />}>
+          <Route path="/login" element={<Login onLogin={login} />} />
+        </Route>
+
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

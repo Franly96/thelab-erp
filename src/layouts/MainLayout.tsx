@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, Navigate, Outlet, useLocation } from 'react-router-dom';
-import { type UserProfile } from '../core/types';
+import { USER_TYPES, type UserProfile } from '../core/types';
 import { ThemeToggle } from '../core/ThemeToggle';
 import { appMeta } from '../content/appMeta';
 
@@ -32,7 +32,10 @@ function MainLayout({ user, onLogout }: MainLayoutProps) {
 
   const initials = getInitials(user.fullName);
   const isActive = (path: string) => location.pathname === path || location.pathname.startsWith(`${path}/`);
-  const navItems = [{ label: 'Dashboard', path: '/' }];
+  const navItems = [
+    { label: 'Dashboard', path: '/', icon: '📊' },
+    ...(user.type === USER_TYPES.Sysadmin ? [{ label: 'Usuarios', path: '/users', icon: '👥' }] : []),
+  ];
 
   return (
     <div className="min-h-screen bg-slate-100 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-50">
@@ -81,7 +84,7 @@ function MainLayout({ user, onLogout }: MainLayoutProps) {
                 }`}
               >
                 <span className="text-lg" aria-hidden>
-                  📊
+                  {item.icon ?? '📊'}
                 </span>
                 <span>{item.label}</span>
               </Link>

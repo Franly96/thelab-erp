@@ -1,8 +1,9 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AuthLayout from './layouts/AuthLayout';
 import MainLayout from './layouts/MainLayout';
-import Dashboard from './pages/Dashboard';
-import Login from './pages/Login';
+import Dashboard from './pages/dashboard';
+import Login from './pages/auth';
+import Users from './pages/users';
 import { useUserStore } from './store/useUserStore';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route element={<MainLayout user={user} onLogout={logout} />}>
           <Route index element={<Dashboard />} />
+          <Route path="/users" element={<Users />} />
         </Route>
 
         <Route element={<AuthLayout isAuthenticated={Boolean(user)} />}>

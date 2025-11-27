@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { USER_TYPES, type UserProfile, type UserType } from '../core/types';
+import { USER_TYPES, type UserProfile, type UserType } from '../../core/types';
 
 type LoginProps = {
   onLogin: (user: UserProfile) => void;
@@ -90,10 +90,11 @@ function Login({ onLogin }: LoginProps) {
       }
 
       const data = await response.json();
+      const resolvedType = (data.user.type ?? data.user.userType ?? USER_TYPES.Service) as UserType;
       const profile: UserProfile = {
         id: data.user.id,
         fullName: data.user.fullName,
-        type: data.user.type,
+        type: resolvedType,
         createdAt: data.user.createdAt ?? new Date().toISOString(),
         updatedAt: data.user.updatedAt ?? new Date().toISOString(),
       };

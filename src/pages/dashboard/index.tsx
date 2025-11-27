@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import QuickLinkCard from '../components/common/QuickLinkCard';
-import ChartCard from '../components/dashboard/ChartCard';
-import DashboardHeader from '../components/dashboard/Header';
-import TopProductsList, { type TopProduct } from '../components/dashboard/TopProductsList';
-import type { MainLayoutContext } from '../layouts/MainLayout';
+import QuickLinkCard from '../../components/common/QuickLinkCard';
+import ChartCard from '../../components/dashboard/ChartCard';
+import DashboardHeader from '../../components/dashboard/Header';
+import TopProductsList, { type TopProduct } from '../../components/dashboard/TopProductsList';
+import type { MainLayoutContext } from '../../layouts/MainLayout';
 
 const quickLinks = [
   //{ title: 'POS', value: 3, color: 'bg-rose-500', icon: '🧾' },

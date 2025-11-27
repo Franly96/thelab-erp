@@ -1,11 +1,31 @@
 import { useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import QuickLinkCard from '../components/common/QuickLinkCard';
+import ChartCard from '../components/dashboard/ChartCard';
+import DashboardHeader from '../components/dashboard/Header';
+import TopProductsList, { type TopProduct } from '../components/dashboard/TopProductsList';
 import type { MainLayoutContext } from '../layouts/MainLayout';
 
-const activity = [
-  { title: 'Ordenes en curso', value: 18, trend: '+3 hoy' },
-  { title: 'Equipos activos', value: 7, trend: 'Sin demoras' },
-  { title: 'Alertas', value: 2, trend: 'Revision en proceso' },
+const quickLinks = [
+  //{ title: 'POS', value: 3, color: 'bg-rose-500', icon: '🧾' },
+  { title: 'Productos', value: 21, color: 'bg-orange-500', icon: '📦' },
+  { title: 'Ventas', value: 524, color: 'bg-amber-400', icon: '🛍️' },
+  //{ title: 'Compras', value: 8, color: 'bg-emerald-500', icon: '🛒' },
+  //{ title: 'Categorias', value: 7, color: 'bg-sky-500', icon: '🗂️' },
+  //{ title: 'Tarjeta de regalo', value: 1, color: 'bg-fuchsia-500', icon: '🎁' },
+  //{ title: 'Clientes', value: 12, color: 'bg-red-500', icon: '👥' },
+  //{ title: 'Configuracion', value: 6, color: 'bg-amber-600', icon: '⚙️' },
+  //{ title: 'Informes', value: 4, color: 'bg-slate-600', icon: '📊' },
+  { title: 'Usuarios', value: 2, color: 'bg-blue-600', icon: '🧑‍💼' },
+  //{ title: 'Backup', value: 3, color: 'bg-slate-700', icon: '💾' },
+  //{ title: 'Tiendas', value: 5, color: 'bg-emerald-600', icon: '🏬' },
+];
+
+const topProducts: TopProduct[] = [
+  { name: 'Bebidas', sales: 12 },
+  { name: 'Snacks', sales: 11 },
+  { name: 'Limpieza', sales: 10 },
+  { name: 'Cuidado personal', sales: 9 },
 ];
 
 function Dashboard() {
@@ -19,50 +39,24 @@ function Dashboard() {
 
   return (
     <div className="space-y-6">
-      <header className="flex flex-wrap items-start justify-between gap-4">
-        <div className="space-y-1.5">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-            Resumen
-          </p>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-            {greeting}, {user.fullName.split(' ')[0]}
-          </h2>
-          <p className="max-w-2xl text-sm text-slate-600 dark:text-slate-400">
-            Esto es un punto de partida, conecta tus modulos para ver datos reales.
-          </p>
-        </div>
-        <div className="rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-sm font-semibold uppercase text-sky-800 shadow-sm dark:border-sky-900/60 dark:bg-sky-900/40 dark:text-sky-100">
-          {user.type}
-        </div>
-      </header>
+      <DashboardHeader user={user} greeting={greeting} />
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {activity.map((item) => (
-          <div
-            key={item.title}
-            className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-800 dark:bg-slate-800/50"
-          >
-            <p className="text-sm text-slate-600 dark:text-slate-400">{item.title}</p>
-            <strong className="mt-2 block text-3xl font-bold text-slate-900 dark:text-white">{item.value}</strong>
-            <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-300">{item.trend}</span>
-          </div>
-        ))}
-      </div>
+      <section className="space-y-3">
+        <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Enlaces rapidos</h3>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+          {quickLinks.map((item) => (
+            <QuickLinkCard key={item.title} {...item} />
+          ))}
+        </div>
+      </section>
 
-      <section className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-sm dark:border-slate-800 dark:bg-slate-800/50">
-          <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Tu equipo esta en linea</h3>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-            Usa este layout como base para agregar graficos, tablas o flujos de trabajo. Mantiene la informacion clave
-            visible y accesible.
-          </p>
-        </div>
-        <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-sm dark:border-slate-800 dark:bg-slate-800/50">
-          <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Estado de autenticacion</h3>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-            El usuario se valida antes de mostrar contenido protegido.
-          </p>
-        </div>
+      <section className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
+        <ChartCard
+          title="Grafico de las ventas"
+          periodLabel="Nov 2018"
+          description="Grafico placeholder — conecta tus datos para ver la evolucion de ventas y comparativos de impuestos y descuentos."
+        />
+        <TopProductsList periodLabel="Mes en curso" products={topProducts} />
       </section>
     </div>
   );

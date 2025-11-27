@@ -3,6 +3,8 @@ import AuthLayout from './layouts/AuthLayout';
 import MainLayout from './layouts/MainLayout';
 import Dashboard from './pages/dashboard';
 import Login from './pages/auth';
+import ProductDetailPage from './pages/products/detail';
+import Products from './pages/products';
 import Users from './pages/users';
 import { useUserStore } from './store/useUserStore';
 
@@ -16,6 +18,8 @@ function App() {
       <Routes>
         <Route element={<MainLayout user={user} onLogout={logout} />}>
           <Route index element={<Dashboard />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<ProductDetailPage />} />
           <Route path="/users" element={<Users />} />
         </Route>
 

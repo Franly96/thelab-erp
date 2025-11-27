@@ -17,3 +17,23 @@ export type User = {
 
 export type PublicUser = User;
 export type UserProfile = PublicUser;
+
+export type Category = {
+  id: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Product = {
+  id: number;
+  name: string;
+  sku: string;
+  quantity: number;
+  location: string;
+  description: string;
+  barcodes: string;
+  category: Category | null;
+  createdAt: string;
+  updatedAt: string;
+};

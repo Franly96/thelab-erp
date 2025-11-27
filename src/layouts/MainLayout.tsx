@@ -32,8 +32,13 @@ function MainLayout({ user, onLogout }: MainLayoutProps) {
 
   const initials = getInitials(user.fullName);
   const isActive = (path: string) => location.pathname === path || location.pathname.startsWith(`${path}/`);
+  const canSeeProducts =
+    user.type === USER_TYPES.Sysadmin ||
+    user.type === USER_TYPES.Admin ||
+    user.type === USER_TYPES.Manager;
   const navItems = [
     { label: 'Dashboard', path: '/', icon: '📊' },
+    ...(canSeeProducts ? [{ label: 'Productos', path: '/products', icon: '📦' }] : []),
     ...(user.type === USER_TYPES.Sysadmin ? [{ label: 'Usuarios', path: '/users', icon: '👥' }] : []),
   ];
 

@@ -4,6 +4,7 @@ import UserForm, { type UserFormValues } from '../../components/users/UserForm';
 import UserTable from '../../components/users/UserTable';
 import { USER_TYPES, type User, type UserType } from '../../core/types';
 import type { MainLayoutContext } from '../../layouts/MainLayout';
+import { toast } from 'react-hot-toast';
 
 type ApiUser = User & { userType?: UserType; updatedAt: string; createdAt: string };
 
@@ -72,6 +73,7 @@ function UsersPage() {
         const data = (await response.json()) as ApiUser;
         setUsers((prev) => prev.map((item) => (item.id === data.id ? normalizeUser(data) : item)));
         setEditing(null);
+        toast.success('Usuario actualizado');
       } else {
         const response = await fetch(`${apiUrl}/users`, {
           method: 'POST',
@@ -83,10 +85,12 @@ function UsersPage() {
         }
         const data = (await response.json()) as ApiUser;
         setUsers((prev) => [normalizeUser(data), ...prev]);
+        toast.success('Usuario creado');
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Error procesando la solicitud';
       setError(message);
+      toast.error(message);
     } finally {
       setSubmitting(false);
     }
@@ -106,9 +110,11 @@ function UsersPage() {
       if (editing?.id === id) {
         setEditing(null);
       }
+      toast.success('Usuario eliminado');
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Error eliminando usuario';
       setError(message);
+      toast.error(message);
     } finally {
       setSubmitting(false);
     }
